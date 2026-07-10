@@ -2,12 +2,17 @@
 #define COMMANDLINEINTERFACE_H
 
 #include "TextDocument.h"
+#include <vector>
 
 class CommandLineInterface {
-    TextDocument doc;
+    std::vector<TextDocument*> tabs;
+    int activeTab;
+
     void printMenu();
     void handleEncryptionDecryption(bool isEncrypt);
 public:
+    CommandLineInterface();  
+    ~CommandLineInterface(); 
     void run();
 };
 

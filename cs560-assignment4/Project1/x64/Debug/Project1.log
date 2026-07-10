@@ -1,7 +1,3 @@
-﻿  CipherManager.cpp
-  CommandLineInterface.cpp
-  Line.cpp
-  TextDocument.cpp
-  main.cpp
-  Создание кода...
+﻿  CommandLineInterface.cpp
+C:\Users\zahan\source\repos\cs560-assignment4\cs560-assignment4\Project1\CommandLineInterface.cpp(154,37): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   Project1.vcxproj -> C:\Users\zahan\source\repos\cs560-assignment4\cs560-assignment4\x64\Debug\Project1.exe

@@ -5,15 +5,32 @@
 
 using namespace std;
 
+CommandLineInterface::CommandLineInterface() {
+    tabs.push_back(new TextDocument());
+    activeTab = 0;
+}
+
+CommandLineInterface::~CommandLineInterface() {
+    for (auto tab : tabs) {
+        delete tab;
+    }
+    tabs.clear();
+}
+
 void CommandLineInterface::printMenu() {
+
+    cout << "Active Tab: " << activeTab + 1 << " / " << tabs.size() << "" << endl;
     cout << "1. Add Text Line\n";
     cout << "2. Add Checklist Line\n";
     cout << "3. Add Contact Line\n";
     cout << "4. Print Document\n";
-    cout << "5. Save to File\n";
-    cout << "6. Load from File\n";
+    cout << "5. Save to File (Plain)\n";
+    cout << "6. Load from File (Plain)\n";
     cout << "7. Encrypt and Save File\n";
     cout << "8. Load and Decrypt File\n";
+    cout << "9. New Tab\n";
+    cout << "10. Switch Tab\n";
+    cout << "11. Close Current Tab\n";
     cout << "0. Exit\n";
     cout << "Choose option: ";
 }
@@ -52,10 +69,10 @@ void CommandLineInterface::handleEncryptionDecryption(bool isEncrypt) {
     if (outFile) {
         outFile << processedContent;
         outFile.close();
-        cout << "Success, file saved to " << outputPath << endl;
+        cout << "Success! File saved to " << outputPath << endl;
     }
     else {
-        cout << "Cannot create output file\n";
+        cout << "Cannot create output file.\n";
     }
 }
 
@@ -76,19 +93,20 @@ void CommandLineInterface::run() {
         bool tempBool;
         ofstream outFile;
         ifstream inFile;
+        int tabChoice;
 
         switch (command) {
         case 1:
             cout << "Enter text: ";
             getline(cin, temp1);
-            doc.addLine(new TextLine(temp1));
+            tabs[activeTab]->addLine(new TextLine(temp1));
             break;
         case 2:
             cout << "Enter task: ";
             getline(cin, temp1);
             cout << "Is it completed? (1 - Yes, 0 - No): ";
             cin >> tempBool;
-            doc.addLine(new ChecklistLine(temp1, tempBool));
+            tabs[activeTab]->addLine(new ChecklistLine(temp1, tempBool));
             break;
         case 3:
             cout << "Enter Name: ";
@@ -97,18 +115,18 @@ void CommandLineInterface::run() {
             getline(cin, temp2);
             cout << "Enter Email: ";
             getline(cin, temp3);
-            doc.addLine(new ContactLine(temp1, temp2, temp3));
+            tabs[activeTab]->addLine(new ContactLine(temp1, temp2, temp3));
             break;
         case 4:
-            cout << "\n";
-            doc.printAll();
+            cout << "\nDocument in Tab " << activeTab + 1 << "\n";
+            tabs[activeTab]->printAll();
             break;
         case 5:
             cout << "Enter filename to save: ";
             getline(cin, temp1);
             outFile.open(temp1);
             if (outFile) {
-                outFile << doc.serializeAll();
+                outFile << tabs[activeTab]->serializeAll();
                 outFile.close();
                 cout << "Saved successfully.\n";
             }
@@ -119,7 +137,7 @@ void CommandLineInterface::run() {
             inFile.open(temp1);
             if (inFile) {
                 string content((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
-                doc.deserializeAll(content);
+                tabs[activeTab]->deserializeAll(content);
                 inFile.close();
                 cout << "Loaded successfully.\n";
             }
@@ -129,6 +147,34 @@ void CommandLineInterface::run() {
             break;
         case 8:
             handleEncryptionDecryption(false);
+            break;
+
+        case 9:
+            tabs.push_back(new TextDocument());
+            activeTab = tabs.size() - 1; 
+            cout << "New tab created, you are now in Tab " << activeTab + 1 << "\n";
+            break;
+        case 10:
+            cout << "Enter tab number to switch to (1 - " << tabs.size() << "): ";
+            cin >> tabChoice;
+            if (tabChoice >= 1 && tabChoice <= tabs.size()) {
+                activeTab = tabChoice - 1; 
+                cout << "Switched to Tab " << activeTab + 1 << ".\n";
+            }
+            else {
+                cout << "Invalid tab number\n";
+            }
+            break;
+        case 11:
+            if (tabs.size() == 1) {
+                cout << "Cannot close the last tab\n";
+            }
+            else {
+                delete tabs[activeTab]; 
+                tabs.erase(tabs.begin() + activeTab); 
+                activeTab = 0; 
+                cout << "Tab closed, you are now in Tab 1\n";
+            }
             break;
         case 0:
             running = false;
