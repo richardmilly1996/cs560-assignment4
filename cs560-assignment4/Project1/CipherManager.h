@@ -1,5 +1,4 @@
-#ifndef CIPHERMANAGER_H
-#define CIPHERMANAGER_H
+#pragma once
 
 #include <string>
 
@@ -8,4 +7,4 @@ public:
     static std::string processText(const std::string& text, int isEncrypt, int cipherChoice, int numKey, const std::string& strKey);
 };
 
-#endif
+

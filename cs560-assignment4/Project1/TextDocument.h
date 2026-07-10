@@ -1,5 +1,4 @@
-#ifndef TEXTDOCUMENT_H
-#define TEXTDOCUMENT_H
+#pragma once
 
 #include <vector>
 #include <string>
@@ -16,4 +15,3 @@ public:
     void deserializeAll(const std::string& data);
 };
 
-#endif

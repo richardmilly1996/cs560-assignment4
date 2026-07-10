@@ -1,5 +1,4 @@
-#ifndef COMMANDLINEINTERFACE_H
-#define COMMANDLINEINTERFACE_H
+#pragma once
 
 #include "TextDocument.h"
 #include <vector>
@@ -16,4 +15,3 @@ public:
     void run();
 };
 
-#endif

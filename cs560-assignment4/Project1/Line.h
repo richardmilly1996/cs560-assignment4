@@ -1,5 +1,4 @@
-#ifndef LINE_H
-#define LINE_H
+#pragma once
 
 #include <string>
 
@@ -35,4 +34,3 @@ public:
     std::string serialize() const override;
 };
 
-#endif
