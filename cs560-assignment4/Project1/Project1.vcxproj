@@ -139,7 +139,17 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Filename.cpp" />
+    <ClCompile Include="CipherManager.cpp" />
+    <ClCompile Include="CommandLineInterface.cpp" />
+    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="TextDocument.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CipherManager.h" />
+    <ClInclude Include="CommandLineInterface.h" />
+    <ClInclude Include="Line.h" />
+    <ClInclude Include="TextDocument.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
